@@ -1,0 +1,5 @@
+\beamer@sectionintoc {1}{Introduction: Why care about the distribution of data?}{3}{0}{1}
+\beamer@sectionintoc {2}{Problem: Analyzing high dimensional data is hard}{4}{0}{2}
+\beamer@sectionintoc {3}{Background: Monte Carlo and variational methods}{6}{0}{3}
+\beamer@sectionintoc {4}{Example: variational autoencoder}{11}{0}{4}
+\beamer@sectionintoc {5}{Discussion: Neuroscience applications}{13}{0}{5}
