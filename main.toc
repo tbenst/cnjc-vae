@@ -2,4 +2,4 @@
 \beamer@sectionintoc {2}{Problem: Analyzing high dimensional data is hard}{8}{0}{2}
 \beamer@sectionintoc {3}{Solution: Variational Methods}{13}{0}{3}
 \beamer@sectionintoc {4}{Example: variational autoencoder}{15}{0}{4}
-\beamer@sectionintoc {5}{Discussion: Neuroscience applications}{17}{0}{5}
+\beamer@sectionintoc {5}{Discussion: Neuroscience applications}{18}{0}{5}
