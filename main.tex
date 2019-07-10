@@ -161,17 +161,73 @@
 
 \newcommand{\Zero}{Introduction: Why care about the distribution of data?}
 \newcommand{\One}{Problem: Analyzing high dimensional data is hard}
-\newcommand{\Two}{Background: Monte Carlo and variational methods}
+\newcommand{\Two}{Solution: Variational Methods}
 \newcommand{\Three}{Example: variational autoencoder}
 
 \section{\Zero}
-\section{\One}
-\begin{frame}[t]{title}
-	body
+
+\begin{frame}[t]{The probability distribution revolution}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item Karl Pearson (1857-1936) came with the idea that scientific measurements should be conceived as coming from probability distributions.
+			\item Scientific measurements are just random reflections of the underlying truth that is the distribution.
+			\item “A great book on the
+history of statistics” $\rightarrow$ Aaron
+			\item
+		\end{itemize}
+
+		\columnbreak
+
+		\includegraphics[width=0.25\textwidth]{media/distribution}
+		\linebreak
+		\includegraphics[width=0.25\textwidth]{media/book}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[t]{The power of probability distributions}
+	Distributions allow scientists to:
+	\begin{itemize}
+		\item Understand scientific measurement
+		\item Predict the probability of specific data
+		\item Test specific hypothesis (p-values)
+		\item Produce generative models
+		\item Better conceptual understanding data.
+	\end{itemize}
 \end{frame}
 %--- Next Frame ---%
 
-\section{\Two}
+\begin{frame}[t]{Estimating distributions from data}
+	\begin{multicols}{2}
+		Low-Dimensional:
+		\begin{itemize}
+			\item Great tools to fit and understand the underlying probability distribution of data.
+		\end{itemize}
+		\vfill\columnbreak
+		High-Dimensional:
+		\begin{itemize}
+			\item In some cases, classical statistical tools are insufficient.
+			\item Problematic for modern neuroscience:
+			\item Thousands of electrodes.
+			\item Millions of voxels.
+		\end{itemize}
+	\end{multicols}
+\end{frame}
+%--- Next Frame ---%
+
+\begin{frame}[t]{Variational Bayesian Methods}
+	Estimate the probability distribution of high-dimensional neural data.
+	\begin{itemize}
+		\item Compute the probability of observing a particular neural state.
+		\item Sample neural states/trajectory from the estimate.
+		\item Generate statistics / test hypotheses
+		\item Estimate latent factors/states that drive the observations.
+		\item Reduce dimensionality (with advantages over other methods, e.g. PCA, T-SNE)
+	\end{itemize}
+\end{frame}
+%--- Next Frame ---%
+
+\section{\One}
+
 \begin{frame}[t]{Approximating the area of a circle with Monte Carlo}
 	\begin{center}
 		\includegraphics[height=0.75\textheight]{media/2d_monte_carlo}
@@ -206,6 +262,14 @@
 	1000 samples, estimate = 4.072, actual = 4.189, $\sim 3\%$ error
 	\nakedfootnote{http://www2.hawaii.edu/~yuxian/phys305/a6/}
 \end{frame}
+
+\section{\Two}
+
+\begin{frame}[t]{Alternate approach: Variational Bayes}
+	\center
+	\includegraphics[width=\textwidth]{media/variational_gaussian}
+\end{frame}
+%--- Next Frame ---%
 
 \section{\Three}
 
