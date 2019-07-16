@@ -1,4 +1,4 @@
 \beamer@sectionintoc {1}{Introduction: Why care about the distribution of data?}{3}{0}{1}
 \beamer@sectionintoc {2}{Problem: Analyzing high dimensional data is hard}{10}{0}{2}
 \beamer@sectionintoc {3}{Solution: Variational Methods}{15}{0}{3}
-\beamer@sectionintoc {4}{Discussion: Neuroscience applications}{23}{0}{4}
+\beamer@sectionintoc {4}{Discussion: Neuroscience applications}{22}{0}{4}

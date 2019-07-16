@@ -302,24 +302,24 @@ Varitional Bayesian methods are powerful statistical approach for estimating the
 	\includegraphics[height=0.8\textheight]{media/3d_monte_carlo}
 	\linebreak
 	1000 samples, estimate = 4.072, actual = 4.189, $\sim 3\%$ error
-	\nakedfootnote{http://www2.hawaii.edu/~yuxian/phys305/a6/}
+	\nakedfootnote{\url{http://www2.hawaii.edu/~yuxian/phys305/a6/}}
 \end{frame}
 
 \section{\Two}
 
 \begin{frame}[t]{Alternate approach: Variational Bayes}{Variational auto-encoders and normalizing flows}
-	\includegraphics[height=0.5\textheight]{media/variational_gaussian}
-	\includegraphics<2>[height=0.45\textheight]{media/normalizing_flow}
+	\includegraphics[height=0.4\textheight]{media/variational_gaussian}
+	\includegraphics<2>[height=0.42\textheight]{media/normalizing_flow}
+	\nakedfootnote{\url{https://blog.evjang.com/2016_08_01_archive.html}}
+	\nakedfootnote{Rezende \& Mohamed, 2015}
 \end{frame}
 %--- Next Frame ---%
 
 \begin{frame}[t]{Variational auto-encoder}
-	\vfill
 	\center
 	\includegraphics[width=\textwidth]{media/vae}
 	Per-datapoint latent variable, $z_t$, which we construct by the \emph{encoder}, $e(x_t) = q_\phi(z_t|x_t)$, where q is parameterized by the variables $\phi$. We can reconstruct an approximation, $\hat{x}_t$, via a \emph{decoder}, $d(z_t) = p_\theta(x_t|z_t)$ with parameterizing variables $\theta$.
-	\vfill
-	\nakedfootnote{http://kvfrans.com/variational-autoencoders-explained/}
+	\nakedfootnote{\url{http://kvfrans.com/variational-autoencoders-explained/}}
 \end{frame}
 %--- Next Frame ---%
 
@@ -334,7 +334,7 @@ Varitional Bayesian methods are powerful statistical approach for estimating the
 	\end{align}
 
 	\note{Note that \ref{jensen} is true thanks to Jensen's inequality: $\varphi(E[X]) \geq E[\varphi(X)]$ for convex function $\varphi$. Intuitively, we want to improve our approximation of $p(x_t)$ by optimizing $\theta, \phi$ to maximize the ELBO.}
-	\nakedfootnote{Kingma \& Welling 2013}
+	\nakedfootnote{Hoffman \& Blei et al 2013}
 \end{frame}
 
 \begin{frame}[t]{Understanding when the bound is tight}
@@ -353,28 +353,15 @@ Varitional Bayesian methods are powerful statistical approach for estimating the
 \begin{frame}[t]{Demo time!}
 	\vfill
 	\center
-	\huge https://bit.ly/2LcEhow
+	\huge \url{https://bit.ly/2LcEhow}
 	\vfill
-\end{frame}
-
-\begin{frame}[t]{Summary}
-	\begin{itemize}
-		\item \One \begin{itemize}
-				\item
-			\end{itemize}
-		\item \Two \begin{itemize}
-			\item
-		\end{itemize}
-		\item \Three \begin{itemize}
-			\item
-		\end{itemize}
-	\end{itemize}
 \end{frame}
 
 \section{Discussion: Neuroscience applications}
 
 \begin{frame}[t]{Example: LFADS}
-	\includegraphics[width=\textwidth]{media/LFADS}
+	\includegraphics[width=\textwidth]{media/LFADS.png}
+	\nakedfootnote{Pandarinath, et al. 2018}
 \end{frame}
 %--- Next Frame ---%
 
