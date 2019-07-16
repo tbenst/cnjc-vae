@@ -62,6 +62,7 @@
 \newcommand{\divg}[1]{\nabla\cdot #1}
 \newcommand{\prob}[1]{P(#1\vert I)}
 \DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\KL}{KL}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -182,6 +183,14 @@ history of statistics” $\rightarrow$ Aaron
 		\linebreak
 		\includegraphics[width=0.25\textwidth]{media/book}
 	\end{multicols}
+
+	\note{Lets start with a bit of history. The idea that scientific measurements are best understood as reflecting underlying probabilities distributions is a relatively new idea.
+
+It was a now famous thinker and scientist, Karl Pearson (of the Pearson correlation coefficient) who conceived the idea in late 18 hundreds.
+
+He realized randomness was inherent part of nature and of scientific measure, and he formulated the idea that all measurments should be conceived of as coming from an underlying probability distributions.
+
+In other words, the underlying truth is the distrubutions, and the measurements are just random reflections of this truth.  At the time, this was a revolutionary idea.}
 \end{frame}
 
 \begin{frame}[t]{The power of probability distributions}
@@ -193,6 +202,17 @@ history of statistics” $\rightarrow$ Aaron
 		\item Produce generative models
 		\item Better conceptual understanding data.
 	\end{itemize}
+	\note{And it was an idea that revolutized science.
+
+	It allowed scientists to:
+	\begin{itemize}
+		\item Better understand their measurements.
+		\item To make predictions about what data they should expect to observe.
+		\item To test scientific hypotheses in a mathematically rigorous way.
+		\item To build generative models of their data, and to test how well those models explain the observed measurments.
+		\item And in general to have a better conceptual understanding of the data they generated.
+	\end{itemize}
+}
 \end{frame}
 %--- Next Frame ---%
 
@@ -206,23 +226,45 @@ history of statistics” $\rightarrow$ Aaron
 		High-Dimensional:
 		\begin{itemize}
 			\item In some cases, classical statistical tools are insufficient.
-			\item Problematic for modern neuroscience:
-			\item Thousands of electrodes.
-			\item Millions of voxels.
+			\item Problematic for modern neuroscience: \begin{itemize}
+				\item Thousands of electrodes.
+				\item Millions of voxels.
+			\end{itemize}
 		\end{itemize}
 	\end{multicols}
+	\note{Since Pearson’s early work, scientists and statisticians have devised an enormous number of related tools.
+
+For example they’ve defined many many distributions, and they’ve created tools for working with those distrubitons (calculating likelihoods and fitting them).
+
+One class of tools aim to estimate the underlying distribution that generated an observed empirical measurment.
+
+These tools are highly effective when data is low dimensional, but they are sometimes insufficient when data is high dimensional.}
+\end{frame}
+%--- Next Frame ---%
+
+\begin{frame}[t]{How can we build statistical distributions for neuroscience datasets?}
+	\movie[]{\includegraphics[width=0.7\textwidth,center]{media/zfish_first.png}}{media/zfish_imaging.mp4}
+	\nakedfootnote{\url{https://www.youtube.com/watch?v=CXYp9xCUhe0}}
+	\note{For example, consider whole brain imaging data from the zebrafish.  This data can have millions of dimensions, which makes estimating the understanding joint probability distribution difficult.  The number of possible states is enormous.  The voxels are not independent.  You can’t simply make a histogram or a heat-map.
+			}
 \end{frame}
 %--- Next Frame ---%
 
 \begin{frame}[t]{Variational Bayesian Methods}
-	Estimate the probability distribution of high-dimensional neural data.
-	\begin{itemize}
-		\item Compute the probability of observing a particular neural state.
-		\item Sample neural states/trajectory from the estimate.
-		\item Generate statistics / test hypotheses
-		\item Estimate latent factors/states that drive the observations.
-		\item Reduce dimensionality (with advantages over other methods, e.g. PCA, T-SNE)
-	\end{itemize}
+	\note<1>{So this brings me to the topic I want to introduce today.  Variational Bayesian Methods.
+
+Varitional Bayesian methods are powerful statistical approach for estimating the underlying probability distrution of high dimensional data.}
+	\uncover<2>{
+		Estimate the probability distribution of high-dimensional neural data.
+		\begin{itemize}
+			\item Compute the probability of observing a particular neural state.
+			\item Sample neural states/trajectory from the estimate.
+			\item Generate statistics / test hypotheses
+			\item Estimate latent factors/states that drive the observations.
+			\item Reduce dimensionality (with advantages over other methods, e.g. PCA, T-SNE)
+		\end{itemize}
+	}
+	\note<2>{And this has several important possible uses in neuroscience.  By estimating the probability distrubiton of, say, whole brain calcium imaging data, one could: …}
 \end{frame}
 %--- Next Frame ---%
 
@@ -265,14 +307,50 @@ history of statistics” $\rightarrow$ Aaron
 
 \section{\Two}
 
-\begin{frame}[t]{Alternate approach: Variational Bayes}
+\begin{frame}[t]{Alternate approach: Variational Bayes}{Variational auto-encoders and normalizing flows}
+	\includegraphics[height=0.5\textheight]{media/variational_gaussian}
+	\includegraphics<2>[height=0.45\textheight]{media/normalizing_flow}
+\end{frame}
+%--- Next Frame ---%
+
+\begin{frame}[t]{Variational auto-encoder}
+	\vfill
 	\center
-	\includegraphics[width=\textwidth]{media/variational_gaussian}
+	\includegraphics[width=\textwidth]{media/vae}
+	Per-datapoint latent variable, $z_t$, which we construct by the \emph{encoder}, $e(x_t) = q_\phi(z_t|x_t)$, where q is parameterized by the variables $\phi$. We can reconstruct an approximation, $\hat{x}_t$, via a \emph{decoder}, $d(z_t) = p_\theta(x_t|z_t)$ with parameterizing variables $\theta$.
+	\vfill
+	\nakedfootnote{http://kvfrans.com/variational-autoencoders-explained/}
+\end{frame}
+%--- Next Frame ---%
+
+\begin{frame}[t]{Derive lower bound $\rightarrow$ optimize!}
+	Starting with the log probability of $x$, we derive (\ref{elbo}), the Evidence lower bound (ELBO):
+	\begin{align}
+	    \log p_\theta(x) &= \log \int_Z p_\theta(x,z) \\
+	        &= \log \int_Z p_\theta(x,z) \frac{q_\phi(z|x)}{q_\phi(z|x)} \\
+	        &= \log E_{q(z|x)}\left[\frac{p_\theta(x,z)}{q_\phi(z|x)}\right] \\
+	        &\geq  E_{q(z|x)}\left[\log\frac{p_\theta(x,z)}{q_\phi(z|x)}\right] \label{jensen}\\
+	        &= E_{q(z|x)}\left[\log p_\theta(x,z) \right] - H(q_\phi(z|x)) = L \label{elbo}
+	\end{align}
+
+	\note{Note that \ref{jensen} is true thanks to Jensen's inequality: $\varphi(E[X]) \geq E[\varphi(X)]$ for convex function $\varphi$. Intuitively, we want to improve our approximation of $p(x_t)$ by optimizing $\theta, \phi$ to maximize the ELBO.}
+	\nakedfootnote{Kingma \& Welling 2013}
 \end{frame}
 
-\section{\Three}
+\begin{frame}[t]{Understanding when the bound is tight}
+	An alternate derivation gives insight for when this bound is tight:
 
-\begin{frame}[t]{Demo}
+	\begin{align}
+	    \KL(q_\phi&(z|x)||p(z|x)) = \int_Z q_\phi(z|x) \log \frac{q_\phi(z|x)}{p_\theta(z|x)} \\
+	        &= \int_Z q_\phi(z|x) \log \frac{q_\phi(z|x)p_\theta(x)}{p_\theta(x,z)} \\
+	        &=  H(q_\phi(z|x)) + \log p_\theta(x) \int_Z q_\phi(z|x) - E_{q_\phi(z|x)}[\log p_\theta(x,z)] \\
+	    L &= \log p_\theta(x) - \KL(q_\phi(z|x)||p_\theta(z|x))
+	\end{align}
+\end{frame}
+
+% \section{\Three}
+
+\begin{frame}[t]{Demo time!}
 	\vfill
 	\center
 	\huge https://bit.ly/2LcEhow
@@ -294,6 +372,7 @@ history of statistics” $\rightarrow$ Aaron
 \end{frame}
 
 \section{Discussion: Neuroscience applications}
+
 \begin{frame}[t]{Example: LFADS}
 	\includegraphics[width=\textwidth]{media/LFADS}
 \end{frame}
